@@ -19,11 +19,15 @@ public class JDBC_conn {
         return conSucess;
     }
 
-    public ResultSet getDataServer(String sqlSelect) throws SQLException {
+    public ResultSet sendQuery(String sqlSelect) throws SQLException {
         // Create and execute a SELECT SQL statement.
         ResultSet rs;
         Statement statement = con.createStatement();
         rs = statement.executeQuery(sqlSelect);
         return rs;
+    }
+
+    public Connection getCon() {
+        return con;
     }
 }
