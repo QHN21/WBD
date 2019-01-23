@@ -9,8 +9,6 @@ import java.time.LocalDate;
 
 public class RMA
 {
-
-
     private SimpleIntegerProperty rmaID;
     private SimpleStringProperty status;
     private Date dataUtworzenia;
