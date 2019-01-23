@@ -68,6 +68,7 @@ public class LogOnController implements Initializable{
                      Menu = loader.load();
                      UserMenuController userMenuController = loader.getController();
                      userMenuController.setConnection(connection);
+                     userMenuController.getUserData();
                  }
 
 

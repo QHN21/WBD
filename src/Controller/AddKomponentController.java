@@ -36,7 +36,7 @@ public class AddKomponentController  implements Initializable {
     }
 
     public void dodajKomponent(ActionEvent evt) throws SQLException {
-        String sqlQuery = "SELECT COUNT(*) FROM Komponenty";
+        String sqlQuery = "SELECT MAX(Komponent_ID) FROM Komponenty";
         ResultSet rs;
         rs = connection.sendQuery(sqlQuery);
         rs.next();

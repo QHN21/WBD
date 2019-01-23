@@ -2,6 +2,7 @@ package Controller.User;
 
 import Controller.AddKomponentController;
 import Model.Connection.JDBC_conn;
+import Model.Entities.RMA;
 import Model.Entities.komponent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,30 +23,30 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable{
     private JDBC_conn connection;
     @FXML
-    private TableView<komponent> komponent_table;
+    private TableView<RMA> rmaTable;
     @FXML
-    public TableColumn<komponent, String> nazwa;
+    public TableColumn<RMA, String> status;
     @FXML
-    public TableColumn<komponent, Integer> nr_seryjny;
+    public TableColumn<RMA, Date> dataUtworzenia;
     @FXML
-    public TableColumn<komponent, String> rodzajKomponentu;
+    public TableColumn<RMA, Date> dataZakonczenia;
+    @FXML
+    public TableColumn<RMA, String> nazwaProduktu;
 
-    private ObservableList <komponent> ol = FXCollections.observableArrayList();
+    private ObservableList <RMA> ol = FXCollections.observableArrayList();
 
     public void setConnection(JDBC_conn connection)
     {
         this.connection = connection;
     }
 
-    public void pressButtonSelect(ActionEvent evt) throws SQLException {
-        String sqlSelect = "SELECT * FROM Komponenty";
-        getData(sqlSelect);
-    }
 
     public void pressButtonWyloguj(ActionEvent evt) throws SQLException, IOException {
         connection.getCon().close();
@@ -58,16 +59,29 @@ public class UserMenuController implements Initializable{
         window.setScene(logScene);
         window.show();
     }
+    public void pressButtonSzczegoly(ActionEvent evt){
+
+    }
+    public void getUserData(){
+        String sqlSelect = "SELECT * FROM RMA JOIN PRODUKTY ON RMA.RMA_ID = PRODUKTY.RMA_ID WHERE PRODUKTY.KLIENT_ID = 2";
+        try
+        {
+            getData(sqlSelect);
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     public void getData(String sqlSelect) throws SQLException {
         ResultSet rs;
         rs = connection.sendQuery(sqlSelect);
         ol.clear();
         while (rs.next()) {
-            ol.add(new komponent(rs.getString(3) ,rs.getInt(2),rs.getString(4)));
+            ol.add(new RMA(rs.getString(4) ,rs.getDate(2),rs.getDate(3),rs.getString(9)));
         }
-        komponent_table.getColumns().clear();
-        komponent_table.getColumns().addAll(nazwa,nr_seryjny,rodzajKomponentu);
+        rmaTable.getColumns().clear();
+        rmaTable.getColumns().addAll(status, dataUtworzenia, dataZakonczenia, nazwaProduktu);
     }
 
     public void pressButtonDodaj(ActionEvent evt) throws IOException {
@@ -89,9 +103,10 @@ public class UserMenuController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        nazwa.setCellValueFactory(new PropertyValueFactory<>("Nazwa"));
-        nr_seryjny.setCellValueFactory(new PropertyValueFactory<>("Nr_seryjny"));
-        rodzajKomponentu.setCellValueFactory(new PropertyValueFactory<>("Typ"));
-        komponent_table.setItems(ol);
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        dataUtworzenia.setCellValueFactory(new PropertyValueFactory<>("dataUtworzenia"));
+        dataZakonczenia.setCellValueFactory(new PropertyValueFactory<>("dataZakonczenia"));
+        nazwaProduktu.setCellValueFactory(new PropertyValueFactory<>("nazwaProduktu"));
+        rmaTable.setItems(ol);
     }
 }
