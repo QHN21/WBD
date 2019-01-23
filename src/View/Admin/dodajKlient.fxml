@@ -12,7 +12,7 @@
    <children>
       <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0">
          <children>
-            <JFXTextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" promptText="Nazwa firmy*" StackPane.alignment="TOP_LEFT">
+            <JFXTextField fx:id="nazwaField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" promptText="Nazwa firmy*" StackPane.alignment="TOP_LEFT">
                <StackPane.margin>
                   <Insets left="150.0" top="40.0" />
                </StackPane.margin>
@@ -23,7 +23,7 @@
                   <Insets />
                </opaqueInsets>
             </JFXTextField>
-            <JFXTextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Telefon*" StackPane.alignment="TOP_LEFT">
+            <JFXTextField fx:id="telefonField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Telefon*" StackPane.alignment="TOP_LEFT">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
@@ -31,7 +31,7 @@
                   <Insets left="150.0" top="90.0" />
                </StackPane.margin>
             </JFXTextField>
-            <JFXTextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="E-mail*" StackPane.alignment="TOP_LEFT">
+            <JFXTextField fx:id="emailField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="E-mail*" StackPane.alignment="TOP_LEFT">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
@@ -44,7 +44,7 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <JFXTextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Miasto*" StackPane.alignment="TOP_LEFT">
+            <JFXTextField fx:id="miastoField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Miasto*" StackPane.alignment="TOP_LEFT">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
@@ -52,7 +52,7 @@
                   <Insets left="150.0" top="190.0" />
                </StackPane.margin>
             </JFXTextField>
-            <JFXTextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Ulica*" StackPane.alignment="TOP_LEFT">
+            <JFXTextField fx:id="ulicaField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Ulica*" StackPane.alignment="TOP_LEFT">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
@@ -60,7 +60,7 @@
                   <Insets left="150.0" top="240.0" />
                </StackPane.margin>
             </JFXTextField>
-            <JFXTextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Numer budynku*" StackPane.alignment="TOP_LEFT">
+            <JFXTextField fx:id="numerBudynkuField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Numer budynku*" StackPane.alignment="TOP_LEFT">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
@@ -76,7 +76,7 @@
                   <Insets left="150.0" top="25.0" />
                </StackPane.margin>
             </Text>
-            <JFXTextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Numer lokalu" StackPane.alignment="TOP_LEFT">
+            <JFXTextField fx:id="numerLokaluField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Numer lokalu" StackPane.alignment="TOP_LEFT">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
@@ -84,7 +84,7 @@
                   <Insets left="150.0" top="340.0" />
                </StackPane.margin>
             </JFXTextField>
-            <JFXTextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Kod pocztowy*" StackPane.alignment="TOP_LEFT">
+            <JFXTextField fx:id="kodPocztowyField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" promptText="Kod pocztowy*" StackPane.alignment="TOP_LEFT">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
@@ -92,12 +92,12 @@
                   <Insets left="150.0" top="390.0" />
                </StackPane.margin>
             </JFXTextField>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #76bcff;" text="Dodaj klienta" StackPane.alignment="BOTTOM_RIGHT">
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#buttonDodajKlient" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #76bcff;" text="Dodaj klienta" StackPane.alignment="BOTTOM_RIGHT">
                <StackPane.margin>
                   <Insets bottom="50.0" right="50.0" />
                </StackPane.margin>
             </JFXButton>
-            <JFXButton focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="54.0" style="-fx-background-color: #76bcff;" text="Cofnij" StackPane.alignment="TOP_LEFT">
+            <JFXButton focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#buttonCofnij" prefHeight="27.0" prefWidth="54.0" style="-fx-background-color: #76bcff;" text="Cofnij" StackPane.alignment="TOP_LEFT">
                <StackPane.margin>
                   <Insets left="10.0" top="10.0" />
                </StackPane.margin>

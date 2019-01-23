@@ -73,6 +73,8 @@ public class AdminMenuController implements Initializable {
         loader.setLocation(getClass().getResource("/View/Admin/dodajKlient.fxml"));
         Parent dodKlient = loader.load();
         Scene klientScene = new Scene(dodKlient, 640, 480);
+        DodajKlientController dodajKlientController = loader.getController();
+        dodajKlientController.setConnection(connection);
         Stage window = (Stage)((Node)evt.getSource()).getScene().getWindow();
         window.setTitle("Centrum RMA");
         window.setScene(klientScene);
@@ -80,7 +82,7 @@ public class AdminMenuController implements Initializable {
     }
 
     public void pressButtonUsunKlienta(ActionEvent evt) throws SQLException, IOException {
-
+        klientTable.getSelectionModel().getSelectedItem().getNazwa();
     }
 
     public void pressButtonProdukty(ActionEvent evt) throws SQLException, IOException {
@@ -100,9 +102,14 @@ public class AdminMenuController implements Initializable {
         ResultSet rs;
         rs = connection.sendQuery(sqlSelect);
         ol.clear();
+        String numerBud;
         while (rs.next()) {
+            if(rs.getString(8)==null)
+                numerBud = rs.getString(7);
+            else
+                numerBud = rs.getString(7)+"/"+rs.getString(8);
             ol.add(new Firma(rs.getString(2) ,rs.getInt(3),rs.getString(4),rs.getString(5)+", "+
-                    rs.getString(6)+" "+rs.getString(7)+"/"+rs.getString(8)+", "+rs.getString(9)));
+                    rs.getString(6)+" "+numerBud+", "+rs.getString(9)));
         }
         klientTable.getColumns().clear();
         klientTable.getColumns().addAll(nazwa,telefon,email,adres);
