@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LogOnController">
+   <children>
+      <StackPane fx:id="rootPane" prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="151.59823417663574">
+               <StackPane.margin>
+                  <Insets right="30.0" top="50.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="149.00000095367432" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets bottom="100.0" left="100.0" right="130.0" top="180.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <JFXTextField fx:id="logField" prefHeight="24.0" prefWidth="112.0" StackPane.alignment="CENTER">
+               <StackPane.margin>
+                  <Insets bottom="40.0" left="230.0" right="200.0" />
+               </StackPane.margin>
+               <effect>
+                  <Bloom />
+               </effect>
+            </JFXTextField>
+            <JFXPasswordField fx:id="passField">
+               <StackPane.margin>
+                  <Insets left="230.0" right="200.0" top="100.0" />
+               </StackPane.margin>
+               <effect>
+                  <Bloom />
+               </effect>
+            </JFXPasswordField>
+            <JFXButton onAction="#pressButtonConnect" style="-fx-background-color: #00b2ff;" text="Connect">
+               <StackPane.margin>
+                  <Insets left="170.0" top="200.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <Text fill="WHITE" fontSmoothingType="LCD" stroke="BLACK" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="4.0" text="Centrum RMA" textAlignment="CENTER" wrappingWidth="643.0">
+               <font>
+                  <Font name="Bauhaus 93" size="64.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets bottom="255.0" />
+               </StackPane.margin>
+            </Text>
+         </children>
+      </StackPane>
+      <StackPane fx:id="dialogStack" layoutX="140.0" layoutY="200.0" maxWidth="200.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>
