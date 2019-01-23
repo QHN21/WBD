@@ -3,7 +3,7 @@ package Controller;
 import Controller.Admin.AdminMenuController;
 import Controller.User.UserMenuController;
 import Model.Connection.JDBC_conn;
-import Model.user;
+import Model.User;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import javafx.event.ActionEvent;
@@ -39,7 +39,7 @@ public class LogOnController implements Initializable{
     @FXML
     private JFXPasswordField passField;
 
-    private LinkedList<user> userData = new LinkedList<>();
+    private LinkedList<User> userData = new LinkedList<>();
 
     public void pressButtonConnect(ActionEvent evt){
         boolean connSucess = false;
@@ -63,6 +63,7 @@ public class LogOnController implements Initializable{
                      Menu = loader.load();
                      AdminMenuController adminMenuController = loader.getController();
                      adminMenuController.setConnection(connection);
+                     adminMenuController.wyswietlKlient();
                  }else {
                      loader.setLocation(getClass().getResource("/View/User/userMenu.fxml"));
                      Menu = loader.load();
@@ -114,7 +115,7 @@ public class LogOnController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         connection = new JDBC_conn();
-        userData.add(new user("user","user",false));
-        userData.add(new user("admin","admin",true));
+        userData.add(new User("User","User",false));
+        userData.add(new User("admin","admin",true));
     }
 }

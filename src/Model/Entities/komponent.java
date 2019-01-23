@@ -3,12 +3,12 @@ package Model.Entities;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class komponent{
+public class Komponent {
     private SimpleStringProperty Nazwa;
     private SimpleIntegerProperty Nr_seryjny;
     private SimpleStringProperty Typ;
 
-    public komponent(String Nazwa,Integer Nr_seryjny, String Typ){
+    public Komponent(String Nazwa, Integer Nr_seryjny, String Typ){
         this.Nazwa = new SimpleStringProperty(Nazwa);
         this.Nr_seryjny = new SimpleIntegerProperty(Nr_seryjny);
         this.Typ = new SimpleStringProperty(Typ);
