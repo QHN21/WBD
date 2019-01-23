@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.User.UserMenuController;
 import Model.Connection.JDBC_conn;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,13 +49,13 @@ public class AddKomponentController  implements Initializable {
 
     public void zakonczDodawanie(ActionEvent evt) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View/clientMenu.fxml"));
+        loader.setLocation(getClass().getResource("/View/User/userMenu.fxml"));
         Parent clientMenu = loader.load();
 
         Scene clientMenuScene = new Scene(clientMenu, 640, 480);
 
-        ClientMenuController clientMenuController = loader.getController();
-        clientMenuController.setConnection(connection);
+        UserMenuController userMenuController = loader.getController();
+        userMenuController.setConnection(connection);
 
         Stage window = (Stage)((Node)evt.getSource()).getScene().getWindow();
 

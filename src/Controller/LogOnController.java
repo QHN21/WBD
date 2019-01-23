@@ -1,5 +1,7 @@
 package Controller;
 
+import Controller.Admin.AdminMenuController;
+import Controller.User.UserMenuController;
 import Model.Connection.JDBC_conn;
 import Model.user;
 import com.jfoenix.controls.*;
@@ -57,15 +59,15 @@ public class LogOnController implements Initializable{
                  FXMLLoader loader = new FXMLLoader();
                  Parent Menu;
                  if(userData.get(userNumber).isAdminAccess()){
-                     loader.setLocation(getClass().getResource("/View/adminMenu.fxml"));
+                     loader.setLocation(getClass().getResource("/View/Admin/adminMenu.fxml"));
                      Menu = loader.load();
                      AdminMenuController adminMenuController = loader.getController();
                      adminMenuController.setConnection(connection);
                  }else {
-                     loader.setLocation(getClass().getResource("/View/clientMenu.fxml"));
+                     loader.setLocation(getClass().getResource("/View/User/userMenu.fxml"));
                      Menu = loader.load();
-                     ClientMenuController clientMenuController = loader.getController();
-                     clientMenuController.setConnection(connection);
+                     UserMenuController userMenuController = loader.getController();
+                     userMenuController.setConnection(connection);
                  }
 
 
@@ -111,7 +113,7 @@ public class LogOnController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         connection = new JDBC_conn();
-        userData.add(new user("klient","klient",false));
+        userData.add(new user("user","user",false));
         userData.add(new user("admin","admin",true));
     }
 }
