@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -39,18 +40,18 @@ public class LogOnController implements Initializable{
     @FXML
     private JFXPasswordField passField;
 
-    private LinkedList<User> userData = new LinkedList<>();
+    private User user;
 
     public void pressButtonConnect(ActionEvent evt){
         boolean connSucess = false;
-        int userNumber;
+        ResultSet rs;
         try {
-             for(userNumber = 0; userNumber < userData.size();userNumber++){
-                 if(logField.getText().equals(userData.get(userNumber).getLogin()) && passField.getText().equals(userData.get(userNumber).getPassword())) {
-                     connSucess = true;
-                     connection.getConnection("kbednars","kbednars");
-                     break;
-                 }
+            String sqlSelect = "SELECT * FROM USERS WHERE USERNAME = \'" + logField.getText() + "\' AND PASSWORD = \'" + passField.getText() + "\'";
+            connection.getConnection("kbednars","kbednars");
+             rs = connection.sendQuery(sqlSelect);
+             if(rs.next()){
+                 user = new User(rs.getString(2),rs.getString(3),rs.getBoolean(4),rs.getInt(5));
+                 connSucess = true;
              }
              if(connSucess == false){
                  logDialog();
@@ -58,7 +59,7 @@ public class LogOnController implements Initializable{
              }else{
                  FXMLLoader loader = new FXMLLoader();
                  Parent Menu;
-                 if(userData.get(userNumber).isAdminAccess()){
+                 if(user.isAdminAccess()){
                      loader.setLocation(getClass().getResource("/View/Admin/adminMenu.fxml"));
                      Menu = loader.load();
                      AdminMenuController adminMenuController = loader.getController();
@@ -115,7 +116,5 @@ public class LogOnController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         connection = new JDBC_conn();
-        userData.add(new User("user","user",false));
-        userData.add(new User("admin","admin",true));
     }
 }

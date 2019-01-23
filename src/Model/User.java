@@ -4,11 +4,13 @@ public class User {
     private String login;
     private String password;
     private boolean adminAccess;
+    private int firma_id;
 
-    public User(String login, String password, boolean adminAccess) {
+    public User(String login, String password, boolean adminAccess, int firma_id) {
         this.login = login;
         this.password = password;
         this.adminAccess = adminAccess;
+        this.firma_id = firma_id;
     }
 
     public String getLogin() {
@@ -33,5 +35,15 @@ public class User {
 
     public void setAdminAccess(boolean adminAccess) {
         this.adminAccess = adminAccess;
+    }
+
+    public int getFirma_id()
+    {
+        return firma_id;
+    }
+
+    public void setFirma_id(int firma_id)
+    {
+        this.firma_id = firma_id;
     }
 }

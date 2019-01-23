@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -54,6 +55,7 @@
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pressButtonSzczegoly" prefHeight="31.0" prefWidth="112.0" text="Szczegóły" StackPane.alignment="BOTTOM_RIGHT" />
                </children>
             </StackPane>
+            <JFXButton onAction="#pressButtonZmienHaslo" text="Zmien Haslo" />
          </children>
       </StackPane>
       <Button layoutX="570.0" layoutY="14.0" mnemonicParsing="false" onAction="#pressButtonWyloguj" text="Wyloguj" />

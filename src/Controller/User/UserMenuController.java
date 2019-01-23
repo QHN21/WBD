@@ -1,6 +1,7 @@
 package Controller.User;
 
 import Controller.AddKomponentController;
+import Controller.PasswordChangeController;
 import Model.Connection.JDBC_conn;
 import Model.Entities.RMA;
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import javax.swing.text.View;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -84,21 +86,22 @@ public class UserMenuController implements Initializable{
         rmaTable.getColumns().addAll(rmaID, status, dataUtworzenia, dataZakonczenia, nazwaProduktu);
     }
 
-    public void pressButtonDodaj(ActionEvent evt) throws IOException {
+    public void pressButtonZmienHaslo(ActionEvent evt) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View/addKomponent.fxml"));
-        Parent addKomponent = loader.load();
+        loader.setLocation(getClass().getResource("/View/passwordChange.fxml"));
+        Parent passwordChange = loader.load();
 
-        Scene addKomponentScene = new Scene(addKomponent, 640, 480);
+        Scene passwordChangeScene = new Scene(passwordChange, 640, 480);
 
-        AddKomponentController AddKompponentController = loader.getController();
-        AddKompponentController.setConnection(connection);
-
-        Stage window = (Stage)((Node)evt.getSource()).getScene().getWindow();
-
+        PasswordChangeController passwordChangeController = loader.getController();
+        passwordChangeController.setConnection(connection);
+        passwordChangeController.setPreviousResource("/View/User/userMenu.fxml");
+        //Stage window = (Stage)((Node)evt.getSource()).getScene().getWindow();
+        Stage window = new Stage();
+        window.initOwner((Stage)((Node)evt.getSource()).getScene().getWindow());
         window.setTitle("Centrum RMA");
-        window.setScene(addKomponentScene);
-        window.show();
+        window.setScene(passwordChangeScene);
+        window.showAndWait();
     }
 
     @Override
