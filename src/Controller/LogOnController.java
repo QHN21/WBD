@@ -2,9 +2,7 @@ package Controller;
 
 import Model.Connection.JDBC_conn;
 import Model.user;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,10 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -26,7 +22,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Struct;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -34,13 +29,13 @@ import java.util.ResourceBundle;
 public class LogOnController implements Initializable{
     private JDBC_conn connection;
     @FXML
-    private AnchorPane rootPane;
+    private StackPane rootPane;
     @FXML
     private StackPane dialogStack;
     @FXML
-    private TextField logField;
+    private JFXTextField logField;
     @FXML
-    private TextField passField;
+    private JFXPasswordField passField;
 
     private LinkedList<user> userData = new LinkedList<>();
 
@@ -90,8 +85,7 @@ public class LogOnController implements Initializable{
     }
 
     private void logDialog(){
-        BoxBlur blur = new BoxBlur(4,4,4);
-        rootPane.setEffect(blur);
+        rootPane.setEffect(new BoxBlur(4,4,3));
         rootPane.setDisable(true);
 
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -99,10 +93,9 @@ public class LogOnController implements Initializable{
         button.setStyle("-fx-background-color: #00b2ff");
         button.setPrefSize(50,20);
         JFXDialog dialog = new JFXDialog(dialogStack,dialogLayout, JFXDialog.DialogTransition.CENTER);
+        dialog.setOverlayClose(false);
 
-        button.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED,(MouseEvent mouseEvent) -> {
-            dialog.close();
-        });
+        button.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED,(MouseEvent mouseEvent) -> dialog.close());
 
         dialog.setOnDialogClosed((JFXDialogEvent event)->{
             rootPane.setEffect(null);
