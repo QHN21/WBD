@@ -5,6 +5,7 @@ import Controller.PasswordChangeController;
 import Model.Connection.JDBC_conn;
 import Model.Entities.RMA;
 import Model.User;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,6 +32,19 @@ import java.util.ResourceBundle;
 public class UserMenuController implements Initializable{
     private JDBC_conn connection;
     private User user;
+
+    @FXML
+    private JFXTextField companyName;
+
+    @FXML
+    private JFXTextField phoneNumber;
+
+    @FXML
+    private JFXTextField email;
+
+    @FXML
+    private JFXTextField adres;
+
     @FXML
     private TableView<RMA> rmaTable;
     @FXML
@@ -67,9 +81,43 @@ public class UserMenuController implements Initializable{
         window.setScene(logScene);
         window.show();
     }
-    public void pressButtonSzczegoly(ActionEvent evt){
+    /*public void pressButtonSzczegoly(ActionEvent evt)throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/View/User/details.fxml"));
+        Parent parent = loader.load();
 
+        Scene scene = new Scene(parent, 640, 480);
+
+        DetailsController detailsController = loader.getController();
+        detailsController.setConnection(connection);
+
+        Stage window = new Stage();
+        window.initOwner((Stage)((Node)evt.getSource()).getScene().getWindow());
+        window.setTitle("Centrum RMA");
+        window.setScene(scene);
+        window.showAndWait();
+    }*/
+
+    public void pressButtonEdytuj(ActionEvent evt)throws  IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/View/User/editUserData.fxml"));
+        Parent parent = loader.load();
+
+        Scene scene = new Scene(parent, 640, 480);
+
+        EditUserDataController editUserDataController = loader.getController();
+        editUserDataController.setConnection(connection);
+        editUserDataController.setUser(user);
+        editUserDataController.getUserData();
+
+        Stage window = new Stage();
+        window.initOwner((Stage)((Node)evt.getSource()).getScene().getWindow());
+        window.setTitle("Centrum RMA");
+        window.setScene(scene);
+        window.showAndWait();
+        getUserData();
     }
+
     public void getUserData(){
         String sqlSelect = "SELECT * FROM RMA JOIN PRODUKTY ON RMA.RMA_ID = PRODUKTY.RMA_ID WHERE PRODUKTY.KLIENT_ID = " + user.getFirma_id();
         try
@@ -79,6 +127,23 @@ public class UserMenuController implements Initializable{
         {
             e.printStackTrace();
         }
+        sqlSelect = "SELECT * FROM Firmy JOIN Klienci ON klienci.firma_id=firmy.firma_id WHERE firmy.firma_id = \'" + user.getFirma_id() + "\'";
+        ResultSet rs;
+        try
+        {
+            rs = connection.sendQuery(sqlSelect);
+            if(rs.next())
+            {
+                companyName.setText(rs.getString(2));
+                phoneNumber.setText(rs.getString(3));
+                email.setText(rs.getString(4));
+                adres.setText(rs.getString(5) + " " + rs.getString(6) + " " + rs.getString(7) + "/" + rs.getString(8) + " " + rs.getString(9));
+            }
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     public void getData(String sqlSelect) throws SQLException {

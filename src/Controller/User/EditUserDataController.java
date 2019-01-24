@@ -1,6 +1,8 @@
-package Controller.Admin;
+package Controller.User;
 
 import Model.Connection.JDBC_conn;
+import Model.Entities.RMA;
+import Model.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -8,17 +10,12 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,9 +23,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class DodajKlientController implements Initializable {
+public class EditUserDataController implements Initializable
+{
     private JDBC_conn connection;
-
+    private User user;
     @FXML
     private StackPane rootPane;
     @FXML
@@ -50,25 +48,25 @@ public class DodajKlientController implements Initializable {
     @FXML
     private JFXTextField kodPocztowyField;
 
-    public void setConnection(JDBC_conn connection) {
+    public void setConnection(JDBC_conn connection)
+    {
         this.connection = connection;
     }
 
-    public void buttonCofnij(ActionEvent evt) throws IOException, SQLException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View/Admin/adminMenu.fxml"));
-        Parent admin = loader.load();
-        Scene adminScene = new Scene(admin, 640, 480);
-        AdminMenuController adminMenuController = loader.getController();
-        adminMenuController.setConnection(connection);
-        adminMenuController.wyswietlKlient("");
-        Stage window = (Stage)((Node)evt.getSource()).getScene().getWindow();
-        window.setTitle("Centrum RMA");
-        window.setScene(adminScene);
-        window.show();
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 
-    public void buttonDodajKlient(ActionEvent evt){
+    public void pressButtonCofnij(ActionEvent evt) throws IOException
+    {
+        goBack();
+    }
+    public void goBack(){
+        rootPane.getScene().getWindow().hide();
+    }
+
+    public void pressButtonZatwierdz(ActionEvent evt){
         String sqlQuery = "SELECT MAX(Firma_ID) FROM Firmy";
         ResultSet rs;
         Boolean error = false;
@@ -76,28 +74,22 @@ public class DodajKlientController implements Initializable {
         try {
             rs = connection.sendQuery(sqlQuery);
             rs.next();
-            int firmaNumber = rs.getInt(1) + 1;;
-            String sqlInsert = "Insert into Firmy (Firma_ID,nazwa_firmy,Telefon,email,miasto,ulica,numer_budynku,numer_lokalu,kod_pocztowy,centrum_id) values ('"
-                    + firmaNumber + "','" + nazwaField.getText() +
-                    "','" + telefonField.getText() + "','" + emailField.getText() + "','" + miastoField.getText() + "', '" + ulicaField.getText() + "', '" + numerBudynkuField.getText()
-                    + "', '" + numerLokaluField.getText() + "', '" + kodPocztowyField.getText() + "', '1')";
-            rs = connection.sendQuery(sqlInsert);
 
-            sqlQuery = "SELECT MAX(Klient_ID) FROM Klienci";
-            rs = connection.sendQuery(sqlQuery);
-            rs.next();
-            int klientNumber = rs.getInt(1) + 1;
 
-            sqlInsert = "Insert into Klienci (Klient_ID,preferowany_odbior,firma_id) values ('" + klientNumber + "', 'osobisty', '" + firmaNumber + "')";
-            connection.sendQuery(sqlInsert);
+            String sqlUpdate = "UPDATE Firmy SET nazwa_firmy =\'"+ nazwaField.getText() + "\' , telefon = \'" + telefonField.getText() + "\' , email = \'" + emailField.getText() + "\' , miasto = \'" + miastoField.getText() + "\', ulica = \'" +
+                    ulicaField.getText() + "\', numer_budynku = " + numerBudynkuField.getText() + ", numer_lokalu = " + numerLokaluField.getText() + ", kod_pocztowy = \'" + kodPocztowyField.getText()+ "\' WHERE firma_id = \'" + user.getFirma_id() + "\'";
+
+            connection.sendQuery(sqlUpdate);
+
         } catch (SQLException e) {
             error = true;
         }
         if(error){
-            komunikat = "Nie udało się dodać nowego rekordu klient";
+            komunikat = "Edycja danych nie powiodła się. Błędne dane.";
+            getUserData();
             dialogDodaj(komunikat);
         }else{
-            komunikat = "Dodawanie nowego rekordu klient zakończone powodzeniem";
+            komunikat = "Edycja zakończona powodzeniem";
             dialogDodaj(komunikat);
         }
         System.out.println("basd");
@@ -127,9 +119,35 @@ public class DodajKlientController implements Initializable {
         dialog.show();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void getUserData()
+    {
+        String sqlSelect = "SELECT * FROM Firmy JOIN Klienci ON klienci.firma_id=firmy.firma_id WHERE firmy.firma_id = \'" + user.getFirma_id() + "\'";
+        ResultSet rs;
+        try
+        {
+            rs = connection.sendQuery(sqlSelect);
+            if (rs.next())
+            {
+                nazwaField.setText(rs.getString(2));
+                telefonField.setText(rs.getString(3));
+                emailField.setText(rs.getString(4));
+                miastoField.setText(rs.getString(5));
+                ulicaField.setText(rs.getString(6));
+                numerBudynkuField.setText(rs.getString(7));
+                numerLokaluField.setText(rs.getString(8));
+                kodPocztowyField.setText(rs.getString(9));
+            }
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+
+    }
 }
