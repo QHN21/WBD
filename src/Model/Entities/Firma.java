@@ -8,7 +8,7 @@ public class Firma {
     private SimpleIntegerProperty Telefon;
     private SimpleStringProperty Email;
     private SimpleStringProperty Adres;
-    private int ID;
+    private Integer ID;
 
     public Firma(String Nazwa, Integer Telefon, String Email, String Adres, int ID){
         this.Nazwa = new SimpleStringProperty(Nazwa);

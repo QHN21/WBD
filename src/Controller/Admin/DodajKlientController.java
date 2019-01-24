@@ -76,7 +76,8 @@ public class DodajKlientController implements Initializable {
         try {
             rs = connection.sendQuery(sqlQuery);
             rs.next();
-            int firmaNumber = rs.getInt(1) + 1;;
+            int firmaNumber = rs.getInt(1) + 1;
+
             String sqlInsert = "Insert into Firmy (Firma_ID,nazwa_firmy,Telefon,email,miasto,ulica,numer_budynku,numer_lokalu,kod_pocztowy,centrum_id) values ('"
                     + firmaNumber + "','" + nazwaField.getText() +
                     "','" + telefonField.getText() + "','" + emailField.getText() + "','" + miastoField.getText() + "', '" + ulicaField.getText() + "', '" + numerBudynkuField.getText()
@@ -128,8 +129,6 @@ public class DodajKlientController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 
 }

@@ -16,16 +16,16 @@ public class Produkt {
     private Date dataAwarii;
     private SimpleStringProperty opis;
 
-    public Produkt(SimpleIntegerProperty numerSeryjny, SimpleIntegerProperty numerWersji, SimpleStringProperty nazwa, SimpleStringProperty typ, Date dataProdukcji, Date dataSprzedazy, Date dataAktualizacji, Date dataAwarii, SimpleStringProperty opis) {
-        this.numerSeryjny = numerSeryjny;
-        this.numerWersji = numerWersji;
-        this.nazwa = nazwa;
-        this.typ = typ;
+    public Produkt(int numerSeryjny, int numerWersji, String nazwa, String typ, Date dataProdukcji, Date dataSprzedazy, Date dataAktualizacji, Date dataAwarii, String opis) {
+        this.numerSeryjny = new SimpleIntegerProperty(numerSeryjny);
+        this.numerWersji = new SimpleIntegerProperty(numerWersji);
+        this.nazwa = new SimpleStringProperty(nazwa);
+        this.typ = new SimpleStringProperty(typ);
         this.dataProdukcji = dataProdukcji;
         this.dataSprzedazy = dataSprzedazy;
         this.dataAktualizacji = dataAktualizacji;
         this.dataAwarii = dataAwarii;
-        this.opis = opis;
+        this.opis = new SimpleStringProperty(opis);
     }
 
     public int getNumerSeryjny() {

@@ -40,14 +40,6 @@
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#pressButtonKomponenty" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #76bcff;" text="Komponenty" StackPane.alignment="CENTER_RIGHT">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <StackPane.margin>
-                  <Insets right="270.0" top="375.0" />
-               </StackPane.margin>
-            </JFXButton>
             <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#pressButtonUsunKlienta" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #76bcff;" text="Usuń klienta" StackPane.alignment="CENTER_RIGHT">
                <font>
                   <Font size="14.0" />
@@ -67,14 +59,6 @@
             <JFXButton onAction="#pressButtonHaslo" style="-fx-background-color: #76bcff;" text="Zmień hasło" StackPane.alignment="TOP_RIGHT">
                <StackPane.margin>
                   <Insets right="100.0" top="10.0" />
-               </StackPane.margin>
-            </JFXButton>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#pressButtonPolaczRMA" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #76bcff;" text="Połącz RMA" StackPane.alignment="CENTER_RIGHT">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <StackPane.margin>
-                  <Insets right="270.0" top="225.0" />
                </StackPane.margin>
             </JFXButton>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Klienci" wrappingWidth="66.2890625" StackPane.alignment="TOP_LEFT">
@@ -101,7 +85,7 @@
             </TableView>
             <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#pressButtonRMA" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #76bcff;" text="RMA" StackPane.alignment="CENTER_RIGHT">
                <font>
-                  <Font size="16.0" />
+                  <Font size="15.0" />
                </font>
                <StackPane.margin>
                   <Insets right="20.0" top="375.0" />

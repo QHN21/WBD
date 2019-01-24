@@ -72,7 +72,6 @@ public class AdminMenuController implements Initializable {
         window.show();
     }
 
-    //TODO press button haslo
     public void pressButtonHaslo(ActionEvent evt) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/View/passwordChange.fxml"));
@@ -94,11 +93,6 @@ public class AdminMenuController implements Initializable {
         wyswietlKlient(szukajField.getText());
     }
 
-    //TODO press button polaczRMA
-    public void pressButtonPolaczRMA(ActionEvent evt) throws SQLException, IOException {
-
-    }
-
     public void pressButtonDodajKlienta(ActionEvent evt) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/View/Admin/dodajKlient.fxml"));
@@ -116,13 +110,18 @@ public class AdminMenuController implements Initializable {
        usunDialog();
     }
 
-    //TODO press button produkty
     public void pressButtonProdukty(ActionEvent evt) throws SQLException, IOException {
-
-    }
-    //TODO press button komponenty
-    public void pressButtonKomponenty(ActionEvent evt) throws SQLException, IOException {
-
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/View/Admin/Produkty.fxml"));
+        Parent dodKlient = loader.load();
+        Scene klientScene = new Scene(dodKlient, 640, 480);
+        ProduktyController produktyController = loader.getController();
+        produktyController.setConnection(connection);
+        produktyController.wyswietlProdukt("");
+        Stage window = (Stage)((Node)evt.getSource()).getScene().getWindow();
+        window.setTitle("Centrum RMA");
+        window.setScene(klientScene);
+        window.show();
     }
 
     public void pressButtonRMA(ActionEvent evt) throws SQLException, IOException {
@@ -146,7 +145,7 @@ public class AdminMenuController implements Initializable {
         String sqlSelect;
         if(szukaj != "")
             sqlSelect = "SELECT * FROM Firmy JOIN Klienci ON klienci.firma_id=firmy.firma_id WHERE LOWER(nazwa_firmy) " +
-                    "LIKE ('"+szukaj+"%') OR UPPER(nazwa_firmy) LIKE('"+szukaj+"%')";
+                    "LIKE LOWER('"+szukaj+"%')";
         else
             sqlSelect = "SELECT * FROM Firmy JOIN Klienci ON klienci.firma_id=firmy.firma_id";
         ResultSet rs;
