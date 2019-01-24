@@ -2,19 +2,28 @@ package Controller.Admin;
 
 import Model.Connection.JDBC_conn;
 import Model.Entities.Firma;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.events.JFXDialogEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -82,7 +91,7 @@ public class AdminMenuController implements Initializable {
     }
 
     public void pressButtonUsunKlienta(ActionEvent evt) throws SQLException, IOException {
-        klientTable.getSelectionModel().getSelectedItem().getNazwa();
+        usunDialog();
     }
 
     public void pressButtonProdukty(ActionEvent evt) throws SQLException, IOException {
@@ -109,10 +118,55 @@ public class AdminMenuController implements Initializable {
             else
                 numerBud = rs.getString(7)+"/"+rs.getString(8);
             ol.add(new Firma(rs.getString(2) ,rs.getInt(3),rs.getString(4),rs.getString(5)+", "+
-                    rs.getString(6)+" "+numerBud+", "+rs.getString(9)));
+                    rs.getString(6)+" "+numerBud+", "+rs.getString(9), rs.getInt(1)));
         }
         klientTable.getColumns().clear();
         klientTable.getColumns().addAll(nazwa,telefon,email,adres);
+    }
+
+    private void usunDialog(){
+        rootPane.setEffect(new BoxBlur(2,2,3));
+        rootPane.setDisable(true);
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        JFXButton buttonTak = new JFXButton("Tak");
+        buttonTak.setStyle("-fx-background-color: #00b2ff");
+        buttonTak.setPrefSize(50,20);
+
+        JFXButton buttonNie = new JFXButton("Nie");
+        buttonNie.setStyle("-fx-background-color: #00b2ff");
+        buttonNie.setPrefSize(50,20);
+
+        JFXDialog dialog = new JFXDialog(dialogPane,dialogLayout, JFXDialog.DialogTransition.CENTER);
+        dialog.setOverlayClose(false);
+ 
+        buttonTak.addEventHandler(MouseEvent.MOUSE_CLICKED,(MouseEvent mouseEvent) -> {
+            int idUsun = klientTable.getSelectionModel().getSelectedItem().getID();
+            String sqlDelete = "DELETE FROM Firmy WHERE firma_id="+idUsun;
+            try {
+                connection.sendQuery(sqlDelete);
+                sqlDelete = "DELETE FROM Klienci WHERE firma_id=" + idUsun;
+                connection.sendQuery(sqlDelete);
+                wyswietlKlient();
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            dialog.close();
+        });
+
+        buttonNie.addEventHandler(MouseEvent.MOUSE_CLICKED,(MouseEvent mouseEvent)-> {
+            dialog.close();
+        });
+
+        dialog.setOnDialogClosed((JFXDialogEvent event)->{
+            rootPane.setEffect(null);
+            rootPane.setDisable(false);
+        });
+
+        Text text = new Text("Czy potwierdzasz usuwanie rekordu klienta?");
+        text.setFont(Font.font(16));
+        dialogLayout.setBody(text);
+        dialogLayout.setActions(buttonTak, buttonNie);
+        dialog.show();
     }
 
     @Override

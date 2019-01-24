@@ -13,7 +13,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Admin.AdminMenuController">
    <children>
-      <StackPane fx:id="dialogPane" layoutX="133.0" layoutY="113.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="359.0" visible="false" />
       <StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" AnchorPane.rightAnchor="0.0">
          <children>
             <JFXButton onAction="#pressButtonWyloguj" style="-fx-background-color: #76bcff;" text="Wyloguj" StackPane.alignment="TOP_RIGHT">
@@ -109,5 +108,6 @@
             </TableView>
          </children>
       </StackPane>
+      <StackPane fx:id="dialogPane" alignment="CENTER_LEFT" layoutX="133.0" layoutY="113.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="200.0" AnchorPane.leftAnchor="200.0" />
    </children>
 </AnchorPane>

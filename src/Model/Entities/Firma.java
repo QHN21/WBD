@@ -10,11 +10,20 @@ public class Firma {
     private SimpleStringProperty Adres;
     private int ID;
 
-    public Firma(String Nazwa, Integer Telefon, String Email, String Adres){
+    public Firma(String Nazwa, Integer Telefon, String Email, String Adres, int ID){
         this.Nazwa = new SimpleStringProperty(Nazwa);
         this.Telefon = new SimpleIntegerProperty(Telefon);
         this.Email = new SimpleStringProperty(Email);
         this.Adres = new SimpleStringProperty(Adres);
+        this.ID = ID;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getNazwa() {
