@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Admin.RMAController">
+    <children>
+        <StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <JFXButton onAction="#pressButtonCofnij" style="-fx-background-color: #76bcff;" text="Cofnij" StackPane.alignment="TOP_LEFT">
+                    <StackPane.margin>
+                        <Insets left="10.0" top="10.0" />
+                    </StackPane.margin>
+                </JFXButton>
+                <JFXTextArea focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" prefColumnCount="1" prefHeight="39.0" prefWidth="208.0" text="RMA" StackPane.alignment="TOP_LEFT">
+                    <StackPane.margin>
+                        <Insets left="20.0" top="40.0" />
+                    </StackPane.margin>
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="TEXT" />
+                    </cursor>
+                </JFXTextArea>
+                <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#pressButtonStworzRMA" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #76bcff;" text="Stwórz RMA" StackPane.alignment="CENTER_RIGHT">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <StackPane.margin>
+                        <Insets right="20.0" top="225.0" />
+                    </StackPane.margin>
+                </JFXButton>
+                <TableView fx:id="RMATable" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" StackPane.alignment="TOP_CENTER">
+                    <columns>
+                        <TableColumn fx:id="rmaID" maxWidth="80.0" minWidth="80.0" text="RMA ID" />
+                        <TableColumn fx:id="status" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Status" />
+                        <TableColumn fx:id="dataUtworzenia" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Data Utworzenia" />
+                        <TableColumn fx:id="dataZakonczenia" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Data Zakończenia" />
+                  <TableColumn fx:id="nazwaProduktu" maxWidth="200.0" prefWidth="150.0" text="Nazwa Produktu" />
+                    </columns>
+                    <StackPane.margin>
+                        <Insets bottom="160.0" left="20.0" right="20.0" top="90.0" />
+                    </StackPane.margin>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+                <JFXButton onAction="#pressButtonSzukaj" prefHeight="25.0" prefWidth="58.0" style="-fx-background-color: #adadad;" text="Szukaj" StackPane.alignment="CENTER_LEFT">
+                    <StackPane.margin>
+                        <Insets left="130.0" top="400.0" />
+                    </StackPane.margin>
+                </JFXButton>
+            <DatePicker fx:id="dataOd" promptText="Od" StackPane.alignment="CENTER_LEFT">
+               <StackPane.margin>
+                  <Insets left="20.0" top="255.0" />
+               </StackPane.margin>
+            </DatePicker>
+            <DatePicker fx:id="dataDo" promptText="Do" StackPane.alignment="CENTER_LEFT">
+               <StackPane.margin>
+                  <Insets left="20.0" top="330.0" />
+               </StackPane.margin>
+            </DatePicker>
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#pressButtonZmienStatus" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #76bcff;" text="Zmień Status" StackPane.alignment="CENTER_RIGHT">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets right="150.0" top="225.0" />
+               </StackPane.margin>
+            </JFXButton>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Data utworzenia:" StackPane.alignment="CENTER_LEFT">
+               <StackPane.margin>
+                  <Insets left="20.0" top="200.0" />
+               </StackPane.margin>
+            </Text>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

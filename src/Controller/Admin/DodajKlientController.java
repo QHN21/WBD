@@ -1,7 +1,11 @@
 package Controller.Admin;
 
 import Model.Connection.JDBC_conn;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.events.JFXDialogEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +13,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +29,10 @@ import java.util.ResourceBundle;
 public class DodajKlientController implements Initializable {
     private JDBC_conn connection;
 
+    @FXML
+    private StackPane rootPane;
+    @FXML
+    private StackPane dialogPane;
     @FXML
     private JFXTextField nazwaField;
     @FXML
@@ -48,7 +61,7 @@ public class DodajKlientController implements Initializable {
         Scene adminScene = new Scene(admin, 640, 480);
         AdminMenuController adminMenuController = loader.getController();
         adminMenuController.setConnection(connection);
-        adminMenuController.wyswietlKlient();
+        adminMenuController.wyswietlKlient("");
         Stage window = (Stage)((Node)evt.getSource()).getScene().getWindow();
         window.setTitle("Centrum RMA");
         window.setScene(adminScene);
@@ -58,6 +71,8 @@ public class DodajKlientController implements Initializable {
     public void buttonDodajKlient(ActionEvent evt){
         String sqlQuery = "SELECT MAX(Firma_ID) FROM Firmy";
         ResultSet rs;
+        Boolean error = false;
+        String komunikat;
         try {
             rs = connection.sendQuery(sqlQuery);
             rs.next();
@@ -77,8 +92,40 @@ public class DodajKlientController implements Initializable {
             sqlInsert = "Insert into Klienci (Klient_ID,preferowany_odbior,firma_id) values ('" + klientNumber + "', 'osobisty', '" + firmaNumber + "')";
             connection.sendQuery(sqlInsert);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            error = true;
         }
+        if(error){
+            komunikat = "Nie udało się dodać nowego rekordu klient";
+            dialogDodaj(komunikat);
+        }else{
+            komunikat = "Dodawanie nowego rekordu klient zakończone powodzeniem";
+            dialogDodaj(komunikat);
+        }
+        System.out.println("basd");
+    }
+
+    public void dialogDodaj(String komunikat){
+        rootPane.setEffect(new BoxBlur(4,4,3));
+        rootPane.setDisable(true);
+
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        JFXButton button = new JFXButton("OK");
+        button.setStyle("-fx-background-color: #00b2ff");
+        button.setPrefSize(50,20);
+        JFXDialog dialog = new JFXDialog(dialogPane,dialogLayout, JFXDialog.DialogTransition.CENTER);
+        dialog.setOverlayClose(false);
+
+        button.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED,(MouseEvent mouseEvent) -> dialog.close());
+
+        dialog.setOnDialogClosed((JFXDialogEvent event)->{
+            rootPane.setEffect(null);
+            rootPane.setDisable(false);
+        });
+        Text text = new Text(komunikat);
+        text.setFont(Font.font(16));
+        dialogLayout.setBody(text);
+        dialogLayout.setActions(button);
+        dialog.show();
     }
 
     @Override

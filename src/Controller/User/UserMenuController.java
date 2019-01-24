@@ -31,7 +31,6 @@ import java.util.ResourceBundle;
 public class UserMenuController implements Initializable{
     private JDBC_conn connection;
     private User user;
-
     @FXML
     private TableView<RMA> rmaTable;
     @FXML

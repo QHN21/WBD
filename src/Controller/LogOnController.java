@@ -64,7 +64,8 @@ public class LogOnController implements Initializable{
                      Menu = loader.load();
                      AdminMenuController adminMenuController = loader.getController();
                      adminMenuController.setConnection(connection);
-                     adminMenuController.wyswietlKlient();
+                     adminMenuController.setUser(user);
+                     adminMenuController.wyswietlKlient("");
                  }else {
                      loader.setLocation(getClass().getResource("/View/User/userMenu.fxml"));
                      Menu = loader.load();

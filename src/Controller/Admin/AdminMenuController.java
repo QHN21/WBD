@@ -1,10 +1,13 @@
 package Controller.Admin;
 
+import Controller.PasswordChangeController;
 import Model.Connection.JDBC_conn;
 import Model.Entities.Firma;
+import Model.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,12 +36,12 @@ import java.util.ResourceBundle;
 
 public class AdminMenuController implements Initializable {
     private JDBC_conn connection;
+    private User user;
 
     @FXML
     private StackPane rootPane;
     @FXML
     private StackPane dialogPane;
-
     @FXML
     private TableView <Firma> klientTable;
     @FXML
@@ -50,12 +52,13 @@ public class AdminMenuController implements Initializable {
     private TableColumn <Firma, String> email;
     @FXML
     private TableColumn <Firma, String> adres;
+    @FXML
+    private JFXTextField szukajField;
 
     private ObservableList<Firma> ol = FXCollections.observableArrayList();
 
-    public void setConnection(JDBC_conn connection) {
-        this.connection = connection;
-    }
+    public void setConnection(JDBC_conn connection) { this.connection = connection; }
+    public void setUser(User user) { this.user = user; }
 
     public void pressButtonWyloguj(ActionEvent evt) throws SQLException, IOException {
         connection.getCon().close();
@@ -69,10 +72,29 @@ public class AdminMenuController implements Initializable {
         window.show();
     }
 
+    //TODO press button haslo
     public void pressButtonHaslo(ActionEvent evt) throws SQLException, IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/View/passwordChange.fxml"));
+        Parent passwordChange = loader.load();
 
+        Scene passwordChangeScene = new Scene(passwordChange, 640, 480);
+
+        PasswordChangeController passwordChangeController = loader.getController();
+        passwordChangeController.setConnection(connection);
+        passwordChangeController.setUser(this.user);
+        Stage window = new Stage();
+        window.initOwner((Stage)((Node)evt.getSource()).getScene().getWindow());
+        window.setTitle("Centrum RMA");
+        window.setScene(passwordChangeScene);
+        window.showAndWait();
     }
 
+    public void pressButtonSzukaj(ActionEvent evt) throws SQLException, IOException {
+        wyswietlKlient(szukajField.getText());
+    }
+
+    //TODO press button polaczRMA
     public void pressButtonPolaczRMA(ActionEvent evt) throws SQLException, IOException {
 
     }
@@ -91,23 +113,42 @@ public class AdminMenuController implements Initializable {
     }
 
     public void pressButtonUsunKlienta(ActionEvent evt) throws SQLException, IOException {
-        usunDialog();
+       usunDialog();
     }
 
+    //TODO press button produkty
     public void pressButtonProdukty(ActionEvent evt) throws SQLException, IOException {
 
     }
-
+    //TODO press button komponenty
     public void pressButtonKomponenty(ActionEvent evt) throws SQLException, IOException {
 
     }
 
     public void pressButtonRMA(ActionEvent evt) throws SQLException, IOException {
+        FXMLLoader loader = new FXMLLoader();
+        Parent Menu;
+        loader.setLocation(getClass().getResource("/View/Admin/RMA.fxml"));
+        Menu = loader.load();
+        RMAController rmaController = loader.getController();
+        rmaController.setConnection(connection);
+        rmaController.wyswietlRMA();
 
+        Scene MenuScene = new Scene(Menu, 640, 480);
+        Stage window = (Stage)((Node)evt.getSource()).getScene().getWindow();
+
+        window.setTitle("Centrum RMA");
+        window.setScene(MenuScene);
+        window.show();
     }
 
-    public void wyswietlKlient() throws SQLException {
-        String sqlSelect = "SELECT * FROM Firmy JOIN Klienci ON klienci.firma_id=firmy.firma_id";
+    public void wyswietlKlient(String szukaj) throws SQLException {
+        String sqlSelect;
+        if(szukaj != "")
+            sqlSelect = "SELECT * FROM Firmy JOIN Klienci ON klienci.firma_id=firmy.firma_id WHERE LOWER(nazwa_firmy) " +
+                    "LIKE ('"+szukaj+"%') OR UPPER(nazwa_firmy) LIKE('"+szukaj+"%')";
+        else
+            sqlSelect = "SELECT * FROM Firmy JOIN Klienci ON klienci.firma_id=firmy.firma_id";
         ResultSet rs;
         rs = connection.sendQuery(sqlSelect);
         ol.clear();
@@ -128,6 +169,7 @@ public class AdminMenuController implements Initializable {
         rootPane.setEffect(new BoxBlur(2,2,3));
         rootPane.setDisable(true);
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
+
         JFXButton buttonTak = new JFXButton("Tak");
         buttonTak.setStyle("-fx-background-color: #00b2ff");
         buttonTak.setPrefSize(50,20);
@@ -138,15 +180,15 @@ public class AdminMenuController implements Initializable {
 
         JFXDialog dialog = new JFXDialog(dialogPane,dialogLayout, JFXDialog.DialogTransition.CENTER);
         dialog.setOverlayClose(false);
- 
+
         buttonTak.addEventHandler(MouseEvent.MOUSE_CLICKED,(MouseEvent mouseEvent) -> {
             int idUsun = klientTable.getSelectionModel().getSelectedItem().getID();
-            String sqlDelete = "DELETE FROM Firmy WHERE firma_id="+idUsun;
             try {
+                String sqlDelete = "DELETE FROM Firmy WHERE firma_id="+idUsun;
                 connection.sendQuery(sqlDelete);
                 sqlDelete = "DELETE FROM Klienci WHERE firma_id=" + idUsun;
                 connection.sendQuery(sqlDelete);
-                wyswietlKlient();
+                wyswietlKlient("");
             }catch (SQLException e) {
                 e.printStackTrace();
             }
