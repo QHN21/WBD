@@ -4,6 +4,7 @@ import Controller.AddKomponentController;
 import Controller.PasswordChangeController;
 import Model.Connection.JDBC_conn;
 import Model.Entities.RMA;
+import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,6 +30,8 @@ import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable{
     private JDBC_conn connection;
+    private User user;
+
     @FXML
     private TableView<RMA> rmaTable;
     @FXML
@@ -49,6 +52,10 @@ public class UserMenuController implements Initializable{
         this.connection = connection;
     }
 
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
 
     public void pressButtonWyloguj(ActionEvent evt) throws SQLException, IOException {
         connection.getCon().close();
@@ -65,7 +72,7 @@ public class UserMenuController implements Initializable{
 
     }
     public void getUserData(){
-        String sqlSelect = "SELECT * FROM RMA JOIN PRODUKTY ON RMA.RMA_ID = PRODUKTY.RMA_ID WHERE PRODUKTY.KLIENT_ID = 2";
+        String sqlSelect = "SELECT * FROM RMA JOIN PRODUKTY ON RMA.RMA_ID = PRODUKTY.RMA_ID WHERE PRODUKTY.KLIENT_ID = " + user.getFirma_id();
         try
         {
             getData(sqlSelect);
@@ -95,8 +102,7 @@ public class UserMenuController implements Initializable{
 
         PasswordChangeController passwordChangeController = loader.getController();
         passwordChangeController.setConnection(connection);
-        passwordChangeController.setPreviousResource("/View/User/userMenu.fxml");
-        //Stage window = (Stage)((Node)evt.getSource()).getScene().getWindow();
+        passwordChangeController.setUser(this.user);
         Stage window = new Stage();
         window.initOwner((Stage)((Node)evt.getSource()).getScene().getWindow());
         window.setTitle("Centrum RMA");
