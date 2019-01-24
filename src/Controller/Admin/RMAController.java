@@ -166,6 +166,7 @@ public class RMAController implements Initializable {
         window.setTitle("Centrum RMA");
         window.setScene(stworzRMAScene);
         window.showAndWait();
+        wyswietlRMA();
     }
 
     public void pressButtonZakonczRMA(ActionEvent evt){
